@@ -1,5 +1,6 @@
 import {connect} from "react-redux";
-import * as actions from "../../actions/cart/cart";
+import * as actionsCart from "../../actions/cart/cart";
+import * as actionsProduct from "../../actions/catalog/catalog";
 import CardProduct from '../../components/sections/CardProduct';
 
 
@@ -12,8 +13,10 @@ const mapStateToProps = (state, {Id}) => ({
 
 //TODO: убрать updateCount
 const mapActionToProps = {
-    addToCart: actions.AddToCart,
-    updateCount: actions.UpdateCount,
+    addToCart: actionsCart.AddToCart,
+    updateCount: actionsCart.UpdateCount,
+
+    fetchById: actionsProduct.FetchById,
 }
 
 export default connect(mapStateToProps, mapActionToProps)(CardProduct);

@@ -5,8 +5,8 @@ import Filter from '../../components/other/Filter';
 
 
 const mapStateToProps = state => ({
-    sortBy: state.product.sortBy,
-    searchQuery: state.product.searchQuery
+    sortBy: state.catalog.sortBy,
+    searchQuery: state.catalog.searchQuery
 })
 
 const mapActionToProps = {
