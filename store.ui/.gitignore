@@ -24,3 +24,8 @@ yarn-error.log*
 !/server.cert
 
 !/server.key
+/.idea/modules.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/store.ui.iml
+/.idea/vcs.xml
+/.idea/.gitignore

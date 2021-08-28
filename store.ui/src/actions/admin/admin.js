@@ -1,14 +1,13 @@
 import api from "./adminAPI";
 import {ACTION_TYPES} from '../../variables/actionTypes';
 
-export const FetchAll = (onSuccess) => dispatch => {
+export const FetchAll = () => dispatch => {
     api.admin().fetchAll()
         .then(response => {
             dispatch({
                 type: ACTION_TYPES.FETCH_ALL,
                 payload: response.data
             })
-            onSuccess()
         })
         .catch(err => console.log(err))
 }

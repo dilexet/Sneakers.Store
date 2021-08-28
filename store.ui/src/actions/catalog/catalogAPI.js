@@ -9,7 +9,7 @@ export default {
             fetchById: async id => await axios.get(url + id),
 
             sort: async sortBy => await axios.get(url, {params: {sortBy}}),
-            search: async sortBy => await axios.get(url, {params: {sortBy}}),
+            search: async searchQuery => await axios.get(url, {params: {searchQuery}}),
         }
     }
 }

@@ -14,23 +14,23 @@ const styles = theme => ({
 });
 
 
-const Filter = ({classes, sortProduct, sortBy, searchQuery, searchProduct}) => {
+const Filter = ({classes, ...props}) => {
 
     return (
         <Container className={classes.cardGrid} maxWidth='md'>
             <Menu secondary>
                 <Menu.Item
                     name='all'
-                    active={sortBy === 'all'}
-                    onClick={sortProduct.bind(this, 'all')}
+                    active={props.sortBy === 'all'}
+                    onClick={props.sortProduct.bind(this, 'all')}
                 >
                     All
                 </Menu.Item>
 
                 <Menu.Item
                     name='name'
-                    active={sortBy === 'name'}
-                    onClick={sortProduct.bind(this, 'name')}
+                    active={props.sortBy === 'name'}
+                    onClick={props.sortProduct.bind(this, 'name')}
                 >
 
                     By name
@@ -38,8 +38,8 @@ const Filter = ({classes, sortProduct, sortBy, searchQuery, searchProduct}) => {
 
                 <Menu.Item
                     name='price_high'
-                    active={sortBy === 'price_high'}
-                    onClick={sortProduct.bind(this, 'price_high')}
+                    active={props.sortBy === 'price_high'}
+                    onClick={props.sortProduct.bind(this, 'price_high')}
                 >
 
                     By price max
@@ -47,8 +47,8 @@ const Filter = ({classes, sortProduct, sortBy, searchQuery, searchProduct}) => {
 
                 <Menu.Item
                     name='price_low'
-                    active={sortBy === 'price_low'}
-                    onClick={sortProduct.bind(this, 'price_low')}
+                    active={props.sortBy === 'price_low'}
+                    onClick={props.sortProduct.bind(this, 'price_low')}
                 >
 
                     By price min
@@ -56,7 +56,7 @@ const Filter = ({classes, sortProduct, sortBy, searchQuery, searchProduct}) => {
 
                 <Menu.Menu position='right'>
                     <Menu.Item>
-                        <Input icon='search' onChange={e => searchProduct(e.target.value)} value={searchQuery}
+                        <Input icon='search' onChange={e => props.searchProduct(e.target.value)} value={props.searchQuery}
                                placeholder='Search...'/>
                     </Menu.Item>
                 </Menu.Menu>

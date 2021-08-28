@@ -1,12 +1,12 @@
 import {connect} from "react-redux";
-import * as actions from "../../actions/filter";
+import * as actions from "../../actions/catalog/catalog";
 
 import Filter from '../../components/other/Filter';
 
 
 const mapStateToProps = state => ({
-    sortBy: state.filter.sortBy,
-    searchQuery: state.filter.searchQuery
+    sortBy: state.product.sortBy,
+    searchQuery: state.product.searchQuery
 })
 
 const mapActionToProps = {
