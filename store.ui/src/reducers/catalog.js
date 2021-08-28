@@ -24,21 +24,21 @@ export const catalog = (state = initialState, action) => {
                 isLoading: true
             }
 
-        case ACTION_TYPES.SORT:
-            return {
-                ...state,
-                list: [...action.payload.list],
-                sortBy: action.payload.sortBy,
-                isLoading: true
-            }
-
-        case ACTION_TYPES.SEARCH:
-            return {
-                ...state,
-                list: [...action.payload.list],
-                searchQuery: action.payload.searchQuery,
-                isLoading: true
-            }
+        // case ACTION_TYPES.SORT:
+        //     return {
+        //         ...state,
+        //         list: [...action.payload.list],
+        //         sortBy: action.payload.sortBy,
+        //         isLoading: true
+        //     }
+        //
+        // case ACTION_TYPES.SEARCH:
+        //     return {
+        //         ...state,
+        //         list: [...action.payload.list],
+        //         searchQuery: action.payload.searchQuery,
+        //         isLoading: true
+        //     }
 
         default:
             return state

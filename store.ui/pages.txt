@@ -1,0 +1,4 @@
+
+/ - Home - only favorite sneakers, slider and brands
+/Admin - crud
+/Catalog - all sneakers and filters

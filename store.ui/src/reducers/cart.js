@@ -22,7 +22,7 @@ export const cart = (state = initialState, action) => {
                 list: state.list.map(x => x.Id === action.payload.Id ? action.payload : x),
             }
 
-        // TODO: похожу логику прописать в ADD и удалить UPDATE
+        //TODO: похожую логику прописать в ADD и удалить UPDATE
         case ACTION_TYPES.REMOVE_FROM_CART: {
             let item = state.list.find(x => x.Id === action.payload);
             if (item.CountProducts <= 1) {
