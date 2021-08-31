@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Button, withStyles} from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
-import {useToasts} from "react-toast-notifications";
+import {Card, Icon, Image} from "semantic-ui-react";
 
 const styles = theme => ({
     root: {
@@ -22,14 +22,11 @@ const styles = theme => ({
     },
 });
 
-const Product = ({classes, addToCart, updateCount, addedCount, fetchById, ...props}) => {
-
-    const {addToast} = useToasts();
+const Product = ({classes, ...props}) => {
 
 
-    const {product} = props.product;
+    const {product, addToCart, updateCount, addedCount, fetchById} = props;
 
-    console.log(props)
     useEffect(() => {
         const Id = props.match.params.Id;
         fetchById(Id);
@@ -37,56 +34,52 @@ const Product = ({classes, addToCart, updateCount, addedCount, fetchById, ...pro
     }, []);
 
 
-
     const handleClick = () => {
         if (addedCount === 0) {
-            addToCart(product.Id)
+            addToCart(product.item.Id)
         } else if (addedCount > 0) {
-            updateCount(product.Id)
+            updateCount(product.item.Id)
         }
     }
 
 
     return (
-        <h1>
-            TEST
-        </h1>
-        // <Card>
-        //     <Image src={product.Image} wrapped ui={false}/>
-        //     <Card.Content>
-        //
-        //         <Card.Header>
-        //             {product.Name}
-        //         </Card.Header>
-        //
-        //         <Card.Meta>
-        //             <span className='date'>{product.ShortDescription}</span>
-        //         </Card.Meta>
-        //
-        //         <Card.Description>
-        //             {product.Description}
-        //         </Card.Description>
-        //
-        //     </Card.Content>
-        //     <Card.Content extra>
-        //     <span>
-        //         <Icon name='usd'/>
-        //         {product.Price}
-        //     </span>
-        //     </Card.Content>
-        //
-        //     <Button
-        //         variant="contained"
-        //         color="default"
-        //         size="small"
-        //         className={classes.smMargin}
-        //         startIcon={<EditIcon/>}
-        //         disabled={false}
-        //         onClick={handleClick.bind(this)}
-        //     >
-        //         Add to cart + {addedCount}
-        //     </Button>
-        // </Card>
+        <Card>
+            <Image src={product.item.Image} wrapped ui={false}/>
+            <Card.Content>
+
+                <Card.Header>
+                    {product.item.Name}
+                </Card.Header>
+
+                <Card.Meta>
+                    <span className='date'>{product.item.ShortDescription}</span>
+                </Card.Meta>
+
+                <Card.Description>
+                    {product.item.Description}
+                </Card.Description>
+
+            </Card.Content>
+            <Card.Content extra>
+            <span>
+                <Icon name='usd'/>
+                {product.item.Price}
+            </span>
+            </Card.Content>
+
+            <Button
+                variant="contained"
+                color="default"
+                size="small"
+                className={classes.smMargin}
+                startIcon={<EditIcon/>}
+                disabled={false}
+                onClick={handleClick.bind(this)}
+            >
+                Add to cart + {addedCount}
+            </Button>
+        </Card>
     )
 }
 

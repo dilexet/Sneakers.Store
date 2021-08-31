@@ -1,11 +1,11 @@
 import {connect} from "react-redux";
 import * as actionsCart from "../../actions/cart/cart";
 import * as actionsProduct from "../../actions/catalog/catalog";
-import CardProduct from '../../components/sections/CardProduct';
+import Product from '../../components/pages/Product';
 
 
 const mapStateToProps = (state, {Id}) => ({
-    product: state,
+    product: state.catalog,
     addedCount: state.cart.list.reduce((count, product) =>
         count + (product.Product.Id === Id ? 1 : 0), 0
     )
@@ -19,4 +19,4 @@ const mapActionToProps = {
     fetchById: actionsProduct.FetchById,
 }
 
-export default connect(mapStateToProps, mapActionToProps)(CardProduct);
+export default connect(mapStateToProps, mapActionToProps)(Product);

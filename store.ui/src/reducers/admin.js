@@ -23,7 +23,7 @@ export const admin = (state = initialState, action) => {
         case ACTION_TYPES.UPDATE:
             return {
                 ...state,
-                list: state.list.map(x => x.Id === action.payload.Id ? action.payload : x),
+                list: state.list.map(x => x.Id !== action.payload.Id ? x : action.payload),
             }
 
         case ACTION_TYPES.DELETE:

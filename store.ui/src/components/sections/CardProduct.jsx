@@ -2,6 +2,7 @@ import React from 'react';
 import {Card, Icon, Image} from 'semantic-ui-react';
 import {Button, withStyles} from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
+import {Link} from 'react-router-dom';
 
 const styles = theme => ({
     root: {
@@ -40,7 +41,7 @@ const CardProduct = ({classes, addToCart, updateCount, addedCount, ...product}) 
             <Card.Content>
 
                 <Card.Header>
-                    {product.Name}
+                    <Link to={`/product/${product.Id}`}>{product.Name}</Link>
                 </Card.Header>
 
                 <Card.Meta>

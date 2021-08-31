@@ -1,11 +1,12 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect} from "react";
 import {AppBar, Container, Toolbar, IconButton, Typography, Box, Button, withStyles} from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 
 
-import LogIn from "./authentication/LogIn";
 import CartMenu from '../../containers/cart/CartMenu';
 import {variable} from "../../variables/variable";
+import {Link} from "react-router-dom";
 
 const styles = theme => ({
     root: {
@@ -19,11 +20,50 @@ const styles = theme => ({
     },
     bar: {
         marginBottom: theme.spacing(10)
+    },
+    box: {
+        float: 'left',
+    },
+    link: {
+        color: 'white'
     }
 });
 
-const Header = ({classes}) => {
-    const [open, setOpen] = React.useState(false);
+const Header = ({classes, ...props}) => {
+
+
+    const handleLogout = () => {
+        props.logout();
+        // window.location.reload();
+    }
+
+    useEffect(() => {
+        props.getUser()
+    }, []);
+
+
+    const isNotAuth = (
+        <Box mr={3}>
+            <Box mr={3} className={classes.box}>
+                <Link to='/login'>
+                    Login
+                </Link>
+            </Box>
+            <Link to='/register'>
+                Register
+            </Link>
+        </Box>
+    )
+
+    const isAuth = (
+        <Box mr={3} className={classes.box}>
+            <Button onClick={handleLogout.bind(this)}>
+                Logout
+            </Button>
+        </Box>
+    )
+
+    // TODO: смена на logout происходит только после обновления страницы
 
     return (
         <header className={classes.bar}>
@@ -34,20 +74,16 @@ const Header = ({classes}) => {
                             <MenuIcon/>
                         </IconButton>
                         <Typography variant="h6" className={classes.title}>
-                            {variable.ProjectName}
+                            <Link to='/' className={classes.link}>
+                                {variable.ProjectName}
+                            </Link>
                         </Typography>
                         <Box mr={5}>
                             <CartMenu/>
                         </Box>
-                        <Box mr={3}>
-                            <Button color="inherit" variant="outlined" onClick={() => setOpen(true)}>
-                                Log In
-                            </Button>
-                            <LogIn {...({open, setOpen})}/>
+                        <Box>
+                            {props.isAuth ? isAuth : isNotAuth}
                         </Box>
-                        <Button color="secondary" variant="contained">
-                            Sign Up
-                        </Button>
                     </Toolbar>
                 </Container>
             </AppBar>
