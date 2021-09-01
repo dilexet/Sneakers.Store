@@ -6,6 +6,7 @@ const initialState = {
     searchQuery: '',
     sortBy: 'all',
     isLoading: false,
+    isOk: false
 }
 
 export const catalog = (state = initialState, action) => {
@@ -21,7 +22,7 @@ export const catalog = (state = initialState, action) => {
             return {
                 ...state,
                 item: action.payload,
-                isLoading: true
+                isOk: true
             }
 
         case ACTION_TYPES.SORT:

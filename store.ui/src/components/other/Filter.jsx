@@ -2,7 +2,7 @@ import React from 'react'
 import {Menu, Input} from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
 import {Container, withStyles} from "@material-ui/core";
-
+import '../../css/filter.css'
 
 const styles = theme => ({
     root: {
@@ -16,47 +16,32 @@ const styles = theme => ({
 
 const Filter = ({classes, ...props}) => {
 
+    const sortBy = ['all', 'name', 'price_high', 'price_low'];
+    const sortName = ['All', 'By name', 'By price high', 'By price low'];
+
+    const filterItem = (value, index) => {
+        return (
+            <Menu.Item
+                key={index}
+                name={value}
+                active={props.sortBy === value}
+                onClick={props.sortProduct.bind(this, value)}
+                className='filterItem'
+            >
+                {sortName[index]}
+            </Menu.Item>
+        )
+    }
+
     return (
         <Container className={classes.cardGrid} maxWidth='md'>
             <Menu secondary>
-                <Menu.Item
-                    name='all'
-                    active={props.sortBy === 'all'}
-                    onClick={props.sortProduct.bind(this, 'all')}
-                >
-                    All
-                </Menu.Item>
-
-                <Menu.Item
-                    name='name'
-                    active={props.sortBy === 'name'}
-                    onClick={props.sortProduct.bind(this, 'name')}
-                >
-
-                    By name
-                </Menu.Item>
-
-                <Menu.Item
-                    name='price_high'
-                    active={props.sortBy === 'price_high'}
-                    onClick={props.sortProduct.bind(this, 'price_high')}
-                >
-
-                    By price max
-                </Menu.Item>
-
-                <Menu.Item
-                    name='price_low'
-                    active={props.sortBy === 'price_low'}
-                    onClick={props.sortProduct.bind(this, 'price_low')}
-                >
-
-                    By price min
-                </Menu.Item>
+                {sortBy.map((product, index) => filterItem(product, index))}
 
                 <Menu.Menu position='right'>
                     <Menu.Item>
-                        <Input icon='search' onChange={e => props.searchProduct(e.target.value)} value={props.searchQuery}
+                        <Input icon='search' onChange={e => props.searchProduct(e.target.value)}
+                               value={props.searchQuery}
                                placeholder='Search...'/>
                     </Menu.Item>
                 </Menu.Menu>

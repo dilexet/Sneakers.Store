@@ -1,16 +1,14 @@
 import React from "react";
 import {
-    Button,
-    TextField,
+    Avatar, Box,
+    Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid, Link,
+    TextField, Typography,
     withStyles,
-    CssBaseline,
-    Avatar,
-    Typography,
-    FormControlLabel, Checkbox, Grid, Link, Box, Container
+
 } from "@material-ui/core";
-import useForm from "./useForm";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import useForm from "../header/authentication/useForm";
 import {Copyright} from "@material-ui/icons";
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {Redirect} from "react-router-dom";
 
 const styles = theme => ({
@@ -33,21 +31,19 @@ const styles = theme => ({
     },
 });
 
-
 const initialFieldValues = {
     UserName: '',
-    Email: '',
     Password: '',
 };
 
-
-const Register = ({classes, ...props}) => {
+const Login = ({classes, ...props}) => {
     const {
         values, handleSubmit, handleInputChange, redirect
-    } = useForm(initialFieldValues, props.register, props.response);
+    } = useForm(initialFieldValues, props.login, props.response);
+
 
     if (redirect) {
-        return <Redirect to='/login'/>
+        return <Redirect to='/'/>
     }
 
     return (
@@ -58,12 +54,12 @@ const Register = ({classes, ...props}) => {
                     <LockOutlinedIcon/>
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Register
+                    Sign in
                 </Typography>
 
                 {
                     props.response.Status.toLowerCase() === 'error' ?
-                        <Typography color='red'>{props.response.Message}</Typography> : ""
+                        <Typography>{props.response.Message}</Typography> : ""
                 }
 
                 <form className={classes.form} onSubmit={handleSubmit} noValidate>
@@ -79,18 +75,6 @@ const Register = ({classes, ...props}) => {
                         onChange={handleInputChange}
                         autoComplete="UserName"
                         autoFocus
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email"
-                        name="Email"
-                        value={values.Email}
-                        onChange={handleInputChange}
-                        autoComplete="email"
                     />
                     <TextField
                         variant="outlined"
@@ -140,4 +124,4 @@ const Register = ({classes, ...props}) => {
     )
 }
 
-export default withStyles(styles)(Register);
+export default withStyles(styles)(Login);

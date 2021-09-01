@@ -2,7 +2,10 @@ import {ACTION_TYPES} from "../variables/actionTypes";
 
 const initialState = {
     user: null,
-    response: '',
+    response: {
+        Status: '',
+        Message: '',
+    },
     isAuthorize: false // не авторизован
 }
 

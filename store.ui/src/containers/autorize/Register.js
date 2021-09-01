@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 
-import Register from '../../components/header/authentication/Register';
+import Register from '../../components/pages/Register';
 import * as actions from "../../actions/authentication/auth";
 
 const mapStateToProps = state => ({

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Card, Icon, Image} from 'semantic-ui-react';
-import {Button, withStyles} from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
-import {Link} from 'react-router-dom';
+import {IconButton, Typography, withStyles} from "@material-ui/core";
+import {Redirect} from 'react-router-dom';
+import '../../css/card.css';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 
 const styles = theme => ({
     root: {
@@ -20,11 +22,12 @@ const styles = theme => ({
     },
     smMargin: {
         margin: theme.spacing(1),
-    }
+    },
 });
 
 const CardProduct = ({classes, addToCart, updateCount, addedCount, ...product}) => {
 
+    const [redirect, setRedirect] = useState(false);
     const handleClick = () => {
         if (addedCount === 0) {
             addToCart(product.Id)
@@ -33,43 +36,36 @@ const CardProduct = ({classes, addToCart, updateCount, addedCount, ...product}) 
         }
     }
 
+    if (redirect) {
+        return <Redirect to={`/product/${product.Id}`}/>
+    }
 
     return (
-
-        <Card>
-            <Image src={product.Image} wrapped ui={false}/>
-            <Card.Content>
-
-                <Card.Header>
-                    <Link to={`/product/${product.Id}`}>{product.Name}</Link>
-                </Card.Header>
-
-                <Card.Meta>
-                    <span className='date'>{product.ShortDescription}</span>
-                </Card.Meta>
-
-                {/*<Card.Description>*/}
-                {/*    Matthew is a musician living in Nashville.*/}
-                {/*</Card.Description>*/}
-
+        <Card className='cardMain'>
+            <Card className='cardClick' onClick={() => setRedirect(true)}>
+                <Image src={product.Image} wrapped ui={false}/>
+                <Card.Content>
+                    <Card.Header className='productName text'>
+                        {product.Name}
+                    </Card.Header>
+                    <Card.Meta>
+                        <span className='productShortDescription text'>{product.ShortDescription}</span>
+                    </Card.Meta>
+                </Card.Content>
+            </Card>
+            <Card.Content extra className='downContent'>
+                <Typography className='priceContent text'>
+                    Price:
+                    <span className='price text'><Icon name='usd'/>{product.Price}</span>
+                </Typography>
+                <IconButton className='addToCartButton' disabled={addedCount > 0} onClick={handleClick.bind(this)}>
+                    {
+                        addedCount > 0
+                            ? <DoneOutlineIcon style={{color: "#29BE00"}} size="small"/>
+                            : <AddShoppingCartIcon size="small"/>
+                    }
+                </IconButton>
             </Card.Content>
-            <Card.Content extra>
-            <span>
-                <Icon name='usd'/>
-                {product.Price}
-            </span>
-            </Card.Content>
-            <Button
-                variant="contained"
-                color="default"
-                size="small"
-                className={classes.smMargin}
-                startIcon={<EditIcon/>}
-                disabled={false}
-                onClick={handleClick.bind(this)}
-            >
-                Add to cart + {addedCount}
-            </Button>
         </Card>
     )
 }

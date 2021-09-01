@@ -1,7 +1,9 @@
 import React, {useEffect} from 'react';
-import {Button, withStyles} from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
+import {IconButton, Typography, withStyles} from "@material-ui/core";
 import {Card, Icon, Image} from "semantic-ui-react";
+import {withRouter} from "react-router-dom";
+import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 
 const styles = theme => ({
     root: {
@@ -23,64 +25,56 @@ const styles = theme => ({
 });
 
 const Product = ({classes, ...props}) => {
-
-
-    const {product, addToCart, updateCount, addedCount, fetchById} = props;
-
-    useEffect(() => {
-        const Id = props.match.params.Id;
-        fetchById(Id);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
+    const {addToCart, updateCount, addedCount} = props;
 
     const handleClick = () => {
         if (addedCount === 0) {
-            addToCart(product.item.Id)
+            addToCart(props.item.Id)
         } else if (addedCount > 0) {
-            updateCount(product.item.Id)
+            updateCount(props.item.Id)
         }
     }
 
+    useEffect(() => {
+        const Id = props.match.params.id;
+        props.fetchById(Id);
+        console.log(props.item)
+        console.log(props.list)
+    }, []);
 
     return (
-        <Card>
-            <Image src={product.item.Image} wrapped ui={false}/>
-            <Card.Content>
-
-                <Card.Header>
-                    {product.item.Name}
-                </Card.Header>
-
-                <Card.Meta>
-                    <span className='date'>{product.item.ShortDescription}</span>
-                </Card.Meta>
-
-                <Card.Description>
-                    {product.item.Description}
-                </Card.Description>
-
+        <Card className='cardMain'>
+            <Card className='cardClick'>
+                <Image src={props.isLoading ? props.item.Image : ''} wrapped ui={false}/>
+                <Card.Content>
+                    <Card.Header className='productName text'>
+                        {props.isLoading ? props.item.Name : ''}
+                    </Card.Header>
+                    <Card.Meta>
+                        <span className='productShortDescription text'>
+                            {props.isLoading ? props.item.ShortDescription : ''}
+                        </span>
+                    </Card.Meta>
+                    <Card.Description>
+                        {props.isLoading ? props.item.Description : ''}
+                    </Card.Description>
+                </Card.Content>
+            </Card>
+            <Card.Content extra className='downContent'>
+                <Typography className='priceContent text'>
+                    Price:
+                    <span className='price text'><Icon name='usd'/>{props.isLoading ? props.item.Price : ''}</span>
+                </Typography>
+                <IconButton className='addToCartButton' disabled={addedCount > 0} onClick={handleClick.bind(this)}>
+                    {
+                        addedCount > 0
+                            ? <DoneOutlineIcon style={{color: "#29BE00"}} size="small"/>
+                            : <AddShoppingCartIcon size="small"/>
+                    }
+                </IconButton>
             </Card.Content>
-            <Card.Content extra>
-            <span>
-                <Icon name='usd'/>
-                {product.item.Price}
-            </span>
-            </Card.Content>
-
-            <Button
-                variant="contained"
-                color="default"
-                size="small"
-                className={classes.smMargin}
-                startIcon={<EditIcon/>}
-                disabled={false}
-                onClick={handleClick.bind(this)}
-            >
-                Add to cart + {addedCount}
-            </Button>
         </Card>
     )
 }
 
-export default (withStyles(styles)(Product));
+export default withRouter(withStyles(styles)(Product));

@@ -1,5 +1,5 @@
 import {Container} from "@material-ui/core";
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, withRouter} from 'react-router-dom';
 
 import './css/App.css';
 
@@ -11,6 +11,7 @@ import Catalog from './containers/catalog/Catalog';
 import Product from "./containers/catalog/Product";
 import Login from "./containers/autorize/Login";
 import Register from "./containers/autorize/Register";
+
 import {useEffect} from "react";
 
 
@@ -32,9 +33,9 @@ function App({...props}) {
                 <Main/>
                 <Switch>
                     <Route exact path='/' component={Catalog}/>
-                    <Route exact path='/login' component={Login}/>
-                    <Route exact path='/register' component={Register}/>
-                    <Route exact path='/product/:Id' component={Product}/>
+                    <Route path='/login' component={Login}/>
+                    <Route path='/register' component={Register}/>
+                    <Route path='/product/:id' component={Product}/>
                 </Switch>
             </section>
             <footer>
@@ -44,4 +45,4 @@ function App({...props}) {
     );
 }
 
-export default App;
+export default withRouter(App);
