@@ -1,16 +1,13 @@
-import React, {useEffect, useState} from "react";
-import {Menu} from 'semantic-ui-react'
-import {Badge, IconButton, Drawer, List, ListItem, Box, Button, withStyles, lighten, darken} from '@material-ui/core';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import React, {useEffect} from "react";
+import {Drawer, List, ListItem, Box, Button, withStyles, lighten, darken} from '@material-ui/core';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 import CartComponent from '../../../containers/cart/CartComponent';
 import Checkout from "../../../containers/cart/Checkout";
+import CartEmpty from "./CartEmpty";
+import '../../../css/cart.css';
 
 const styles = () => ({
-    drawer: {
-        width: '500px',
-    },
     drawerItem: {
         display: 'flex',
         flexDirection: 'column',
@@ -76,7 +73,6 @@ const styles = () => ({
 });
 
 const CartMenu = ({classes, ...props}) => {
-    const [open, setOpen] = useState(false);
     const [openOrder, setOpenOrder] = React.useState(false);
 
     useEffect(() => {
@@ -85,51 +81,42 @@ const CartMenu = ({classes, ...props}) => {
     }, []);
 
     return (
-        <Menu>
-            <IconButton aria-label="cart" onClick={() => setOpen(true)}>
-                <Badge badgeContent={props.count} color="secondary">
-                    <ShoppingCartIcon/>
-                </Badge>
-            </IconButton>
 
-            <Drawer className={classes.drawer} anchor='right' open={open} onClose={()=> setOpen(false)}>
-                <h2 className={classes.heading}>Cart</h2>
-                {props.products.length > 0 ? (
-                    <div className={classes.drawerItem}>
+        <Drawer className='drawer' anchor='right' open={props.open} onClose={() => props.setOpen(false)}>
+            <h2 className={classes.heading}>Shopping cart</h2>
+            {props.products.length > 0 ? (
+                <div className={classes.drawerItem}>
 
-                        <List className={classes.list}>
-                            {props.products.map((product, index) => <CartComponent
-                                key={index} {...product}/>)}
-                        </List>
+                    <List className={classes.list}>
+                        {props.products.map((product, index) => <CartComponent
+                            key={index} {...product}/>)}
+                    </List>
 
-                        <Box className={classes.cartTotalBlock}>
-                            <List name='totalPrice'>
-                                <ListItem>
+                    <Box className={classes.cartTotalBlock}>
+                        <List name='totalPrice'>
+                            <ListItem>
                         <span>
                             Total:
                         </span>
-                                    <Box/>
-                                    <b>{props.totalPrice}</b>&nbsp;$
-                                </ListItem>
-                            </List>
-                            <Button
-                                variant="contained"
-                                className={classes.buttonCheckout}
-                                endIcon={<ArrowForwardIcon/>}
-                                onClick={() => setOpenOrder(true)}
-                            >
-                                Checkout
-                            </Button>
-                            <Checkout {...({openOrder, setOpenOrder})}/>
-                        </Box>
-                    </div>
-                ) : (
-                    <div>
-                        Корзина пуста
-                    </div>
-                )}
-            </Drawer>
-        </Menu>
+                                <Box/>
+                                <b>{props.totalPrice}</b>&nbsp;$
+                            </ListItem>
+                        </List>
+                        <Button
+                            variant="contained"
+                            className={classes.buttonCheckout}
+                            endIcon={<ArrowForwardIcon/>}
+                            onClick={() => setOpenOrder(true)}
+                        >
+                            Checkout
+                        </Button>
+                        <Checkout {...({openOrder, setOpenOrder})}/>
+                    </Box>
+                </div>
+            ) : (
+                <CartEmpty setOpen={props.setOpen}/>
+            )}
+        </Drawer>
     )
 }
 

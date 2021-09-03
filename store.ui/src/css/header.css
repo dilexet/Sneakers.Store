@@ -1,0 +1,8 @@
+.headerAppBar {
+    margin-bottom: 100px;
+}
+
+.appBar {
+    background: rgb(194,17,167);
+    background: linear-gradient(90deg, rgba(194,17,167,1) 0%, rgba(131,17,140,1) 50%, rgba(74,17,116,1) 100%);
+}

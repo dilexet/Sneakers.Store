@@ -42,7 +42,9 @@ const Filter = ({classes, ...props}) => {
                     <Menu.Item>
                         <Input icon='search' onChange={e => props.searchProduct(e.target.value)}
                                value={props.searchQuery}
-                               placeholder='Search...'/>
+                               placeholder='Search...'
+                               className='searchInput'
+                        />
                     </Menu.Item>
                 </Menu.Menu>
             </Menu>

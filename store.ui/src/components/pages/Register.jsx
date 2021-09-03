@@ -10,7 +10,6 @@ import {
 } from "@material-ui/core";
 import useForm from "../header/authentication/useForm";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import {Copyright} from "@material-ui/icons";
 import {Redirect} from "react-router-dom";
 
 const styles = theme => ({
@@ -62,7 +61,7 @@ const Register = ({classes, ...props}) => {
                 </Typography>
 
                 {
-                    props.response.Status.toLowerCase() === 'error' ?
+                    props.response && props.response.Status.toLowerCase() === 'error' ?
                         <Typography color='red'>{props.response.Message}</Typography> : ""
                 }
 
@@ -133,9 +132,7 @@ const Register = ({classes, ...props}) => {
                     </Grid>
                 </form>
             </div>
-            <Box mt={8}>
-                <Copyright/>
-            </Box>
+            <Box mt={8}/>
         </Container>
     )
 }

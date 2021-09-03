@@ -4,11 +4,13 @@ import {
     Typography,
     Button,
     withStyles,
-    Paper,
     Grid
 } from "@material-ui/core";
 
 import {variable} from '../../variables/variable';
+import CarouselBox from "./CarouselBox";
+import '../../css/carousel.css';
+
 
 const styles = theme => ({
     root: {
@@ -42,39 +44,12 @@ const styles = theme => ({
     }
 });
 
-const Main = ({classes}) => {
+const Main = () => {
     return (
         <main>
-            <Paper className={classes.mainFeaturesPost}
-                   style={{backgroundImage: 'url(https://source.unsplash.com/random)'}}>
-                <Container maxWidth='md'>
-                    <div className={classes.overlay}/>
-                    <Grid container>
-                        <Grid item md={12}>
-                            <div className={classes.mainFeaturesPostContent}>
-                                <Typography
-                                    component="h1"
-                                    variant="h3"
-                                    color="inherit"
-                                    gutterBottom
-                                >
-                                    {variable.ProjectName}
-                                </Typography>
-                                <Typography
-                                    variant="h5"
-                                    color="inherit"
-                                    paragraph
-                                >
-                                    {variable.Description}
-                                </Typography>
-                                <Button variant='contained' className={classes.mainButton}>
-                                    Learn more
-                                </Button>
-                            </div>
-                        </Grid>
-                    </Grid>
-                </Container>
-            </Paper>
+            <Container className='carouselBox'>
+                <CarouselBox/>
+            </Container>
 
             <div>
                 <Container maxWidth="sm">
@@ -97,12 +72,12 @@ const Main = ({classes}) => {
                     <div>
                         <Grid container spacing={4} justifyContent='center'>
                             <Grid item>
-                                <Button variant='contained' color='primary'>
+                                <Button variant='contained' className='btnPurple'>
                                     Start Now
                                 </Button>
                             </Grid>
                             <Grid item>
-                                <Button variant='outlined' color='primary'>
+                                <Button variant='outlined' className='btnPurpleBorder'>
                                     Start Now
                                 </Button>
                             </Grid>

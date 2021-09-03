@@ -5,6 +5,8 @@ import {Redirect} from 'react-router-dom';
 import '../../css/card.css';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const styles = theme => ({
     root: {
@@ -25,14 +27,41 @@ const styles = theme => ({
     },
 });
 
-const CardProduct = ({classes, addToCart, updateCount, addedCount, ...product}) => {
+const CardProduct = ({
+                         classes,
+                         addToCart,
+                         updateCount,
+                         addedCount,
+                         removeFromFavorite,
+                         addToFavorite,
+                         isFavorite,
+                         ...product
+                     }) => {
 
     const [redirect, setRedirect] = useState(false);
+    const [isLiked, setIsLiked] = useState(isFavorite);
+
     const handleClick = () => {
         if (addedCount === 0) {
             addToCart(product.Id)
         } else if (addedCount > 0) {
             updateCount(product.Id)
+        }
+    }
+
+    const handleLikeClick = () => {
+        if (isLiked === true) {
+            console.log('remove')
+            console.log(isLiked)
+            console.log(isFavorite)
+            removeFromFavorite(product.Id)
+            setIsLiked(false)
+        } else {
+            console.log('add')
+            console.log(isLiked)
+            console.log(isFavorite)
+            addToFavorite(product.Id)
+            setIsLiked(true)
         }
     }
 
@@ -42,6 +71,12 @@ const CardProduct = ({classes, addToCart, updateCount, addedCount, ...product}) 
 
     return (
         <Card className='cardMain'>
+            <IconButton className='likeButton' onClick={handleLikeClick.bind(this)}>
+                {
+                    isLiked ? <FavoriteIcon className='likeIcon'/> :
+                        <FavoriteBorderIcon className='likeIcon'/>
+                }
+            </IconButton>
             <Card className='cardClick' onClick={() => setRedirect(true)}>
                 <Image src={product.Image} wrapped ui={false}/>
                 <Card.Content>
@@ -49,14 +84,14 @@ const CardProduct = ({classes, addToCart, updateCount, addedCount, ...product}) 
                         {product.Name}
                     </Card.Header>
                     <Card.Meta>
-                        <span className='productShortDescription text'>{product.ShortDescription}</span>
+                        <span className='productShortDescription'>{product.ShortDescription}</span>
                     </Card.Meta>
                 </Card.Content>
             </Card>
             <Card.Content extra className='downContent'>
-                <Typography className='priceContent text'>
+                <Typography className='priceContent'>
                     Price:
-                    <span className='price text'><Icon name='usd'/>{product.Price}</span>
+                    <span className='price'><Icon name='usd'/>{product.Price}</span>
                 </Typography>
                 <IconButton className='addToCartButton' disabled={addedCount > 0} onClick={handleClick.bind(this)}>
                     {

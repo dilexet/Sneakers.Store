@@ -7,7 +7,6 @@ import {
 
 } from "@material-ui/core";
 import useForm from "../header/authentication/useForm";
-import {Copyright} from "@material-ui/icons";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {Redirect} from "react-router-dom";
 
@@ -58,7 +57,7 @@ const Login = ({classes, ...props}) => {
                 </Typography>
 
                 {
-                    props.response.Status.toLowerCase() === 'error' ?
+                    props.response && props.response.Status.toLowerCase() === 'error' ?
                         <Typography>{props.response.Message}</Typography> : ""
                 }
 
@@ -117,9 +116,7 @@ const Login = ({classes, ...props}) => {
                     </Grid>
                 </form>
             </div>
-            <Box mt={8}>
-                <Copyright/>
-            </Box>
+            <Box mt={8}/>
         </Container>
     )
 }

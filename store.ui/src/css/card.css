@@ -26,15 +26,18 @@
 
 .price {
     font-weight: bolder !important;
+    color: rgba(0, 0, 0, .6);
 }
 
 .productShortDescription {
     font-size: 10px !important;
+    color: rgba(0, 0, 0, .6);
 }
 
 .priceContent {
     text-align: left;
     width: 50px !important;
+    color: rgba(0, 0, 0, .6);
 }
 
 .downContent {
@@ -43,4 +46,23 @@
 
 .addToCartButton {
     left: 50px;
+}
+
+.likeButton {
+    display: inline-block;
+    justify-content: space-between;
+    width: 1em;
+    height: 1em;
+}
+
+.likeButton:hover {
+    background-color: white !important;
+}
+
+.likeIcon {
+    color: #A019BE;
+}
+
+.likeIcon:hover {
+    color: #75138B;
 }

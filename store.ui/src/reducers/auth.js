@@ -26,7 +26,7 @@ export const auth = (state = initialState, action) => {
         case ACTION_TYPES.LOGOUT:
             return {
                 ...state,
-                response: action.payload.Message,
+                response: action.payload,
                 isAuthorize: false
             }
 

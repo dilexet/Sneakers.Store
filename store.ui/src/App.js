@@ -3,7 +3,6 @@ import {Switch, Route, withRouter} from 'react-router-dom';
 
 import './css/App.css';
 
-import Header from './containers/autorize/Header';
 import Main from './components/sections/Main';
 import Footer from './components/footer/Footer';
 
@@ -13,6 +12,8 @@ import Login from "./containers/autorize/Login";
 import Register from "./containers/autorize/Register";
 
 import {useEffect} from "react";
+import HeaderAppBar from "./containers/cart/HeaderAppBar";
+import Navigation from "./components/footer/Navigation";
 
 
 // TODO: почистить код и убрать не нужные useEffect
@@ -25,11 +26,12 @@ function App({...props}) {
 
 
     return (
-        <Container maxWidth="lg">
-            <header>
-                <Header/>
+        <div>
+            <header className='header'>
+                <HeaderAppBar/>
+                {/*<Header/>*/}
             </header>
-            <section>
+            <Container maxWidth="lg" className='sections'>
                 <Main/>
                 <Switch>
                     <Route exact path='/' component={Catalog}/>
@@ -37,11 +39,14 @@ function App({...props}) {
                     <Route path='/register' component={Register}/>
                     <Route path='/product/:id' component={Product}/>
                 </Switch>
-            </section>
+            </Container>
             <footer>
                 <Footer/>
             </footer>
-        </Container>
+            <Container>
+                <Navigation/>
+            </Container>
+        </div>
     );
 }
 

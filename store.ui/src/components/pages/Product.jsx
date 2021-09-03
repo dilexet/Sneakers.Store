@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {useEffect} from 'react';
 import {IconButton, Typography, withStyles} from "@material-ui/core";
 import {Card, Icon, Image} from "semantic-ui-react";
@@ -38,8 +39,6 @@ const Product = ({classes, ...props}) => {
     useEffect(() => {
         const Id = props.match.params.id;
         props.fetchById(Id);
-        console.log(props.item)
-        console.log(props.list)
     }, []);
 
     return (

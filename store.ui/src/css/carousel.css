@@ -1,0 +1,17 @@
+@media (min-width: 576px) {
+    .carouselBox {
+        height: 200px;
+    }
+}
+
+@media (min-width: 768px) {
+    .carouselBox {
+        height: 300px;
+    }
+}
+
+@media (min-width: 992px) {
+    .carouselBox {
+        height: 410px;
+    }
+}
