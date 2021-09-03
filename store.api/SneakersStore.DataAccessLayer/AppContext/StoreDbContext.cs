@@ -19,6 +19,7 @@ namespace SneakersStore.DataAccessLayer.AppContext
         public DbSet<Product> Products { get; set; }
 
         public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<FavoriteItem> FavoriteItems { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<OrderForm> OrderForms { get; set; }
 

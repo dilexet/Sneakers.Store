@@ -13,14 +13,14 @@ namespace SneakersStore.WebAPI.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IRepository _repository;
-        private readonly Cart _cart;
+        private readonly SessionService _sessionService;
         private readonly ILogger<OrderController> _logger;
 
-        public OrderController(ILogger<OrderController> logger, IRepository repository, Cart cart)
+        public OrderController(ILogger<OrderController> logger, IRepository repository, SessionService sessionService)
         {
             _logger = logger;
             _repository = repository;
-            _cart = cart;
+            _sessionService = sessionService;
         }
 
         // public IActionResult Complete()
@@ -36,7 +36,7 @@ namespace SneakersStore.WebAPI.Controllers
             {
                 orderForm.OrderTime = DateTime.Now;
 
-                var items = _cart.GetShopItems(cartId).ToList();
+                var items = _sessionService.GetShopItems(cartId).ToList();
 
                 _repository.Add(orderForm);
 

@@ -15,23 +15,23 @@ namespace SneakersStore.WebAPI.Controllers
     public class CartController : ControllerBase
     {
         private readonly IRepository _repository;
-        private readonly Cart _cart;
+        private readonly SessionService _sessionService;
         private readonly ILogger<CartController> _logger;
 
-        public CartController(ILogger<CartController> logger, IRepository repository, Cart cart)
+        public CartController(ILogger<CartController> logger, IRepository repository, SessionService sessionService)
         {
             _logger = logger;
             _repository = repository;
-            _cart = cart;
+            _sessionService = sessionService;
         }
 
         [HttpGet]
         public JsonResult GetCart(Guid cartId)
         {
-            var items = _cart.GetShopItems(cartId).ToList();
-            _cart.ListShopItems = items.ToList();
+            var items = _sessionService.GetShopItems(cartId).ToList();
+            _sessionService.ListShopItems = items.ToList();
 
-            var obj = new CartViewModel { CartId = _cart.CartId, CartItems = _cart.ListShopItems };
+            var obj = new CartViewModel { CartId = _sessionService.CartId, CartItems = _sessionService.ListShopItems };
             return new JsonResult(obj);
         }
 
@@ -47,7 +47,7 @@ namespace SneakersStore.WebAPI.Controllers
                 // return CreatedAtAction("GetCart", null, item);
             }
 
-            var cartItem = _cart.AddToCart(product, cartId);
+            var cartItem = _sessionService.AddToCart(product, cartId);
 
             return new JsonResult(cartItem);
         }
@@ -65,7 +65,7 @@ namespace SneakersStore.WebAPI.Controllers
                 // return CreatedAtAction("GetCart", null, item);
             }
 
-            var cartItem = _cart.AddToCart(product, cartId);
+            var cartItem = _sessionService.AddToCart(product, cartId);
 
 
             // _repository.Update(product);

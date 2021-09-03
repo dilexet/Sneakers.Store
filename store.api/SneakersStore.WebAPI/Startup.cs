@@ -56,7 +56,7 @@ namespace SneakersStore.WebAPI
                     provider.GetService<IContextFactory>()));
 
 
-            services.AddScoped(Cart.GetCart);
+            services.AddScoped(SessionService.GetCart);
 
             services.AddMemoryCache();
             services.AddDistributedMemoryCache();

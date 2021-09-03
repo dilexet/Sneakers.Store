@@ -9,11 +9,11 @@ using SneakersStore.Domain.Entities;
 
 namespace SneakersStore.DataAccessLayer.Utils
 {
-    public class Cart
+    public class SessionService
     {
         private readonly IRepository _repository;
 
-        public Cart(IRepository repository)
+        public SessionService(IRepository repository)
         {
             _repository = repository;
         }
@@ -21,8 +21,9 @@ namespace SneakersStore.DataAccessLayer.Utils
         public Guid CartId { get; set; }
 
         public IEnumerable<CartItem> ListShopItems { get; set; }
+        public IEnumerable<FavoriteItem> ListFavoriteItems { get; set; }
 
-        public static Cart GetCart(IServiceProvider services)
+        public static SessionService GetCart(IServiceProvider services)
         {
             ISession session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
 
@@ -31,7 +32,7 @@ namespace SneakersStore.DataAccessLayer.Utils
 
             session.SetString("CartIdServer", cartId);
 
-            return new Cart(repository) { CartId = new Guid(cartId) };
+            return new SessionService(repository) { CartId = new Guid(cartId) };
         }
 
         // TODO: можно разбить на 2 метода
@@ -66,6 +67,24 @@ namespace SneakersStore.DataAccessLayer.Utils
             return existingProduct;
         }
 
+        public FavoriteItem AddToFavorite(Product product, Guid cartId)
+        {
+            if (cartId != Guid.Empty)
+            {
+                CartId = cartId;
+            }
+
+            var favoriteItem = new FavoriteItem()
+            {
+                CartId = cartId,
+                Product = product
+            };
+
+            _repository.Add(favoriteItem);
+            _repository.Save();
+            return favoriteItem;
+        }
+
         public IEnumerable<CartItem> GetShopItems(Guid cartId)
         {
             if (cartId != Guid.Empty)
@@ -74,6 +93,18 @@ namespace SneakersStore.DataAccessLayer.Utils
             }
 
             var data = _repository.Get<CartItem>().AsQueryable().Where(c => c.CartId == CartId)
+                .Include(s => s.Product);
+            return data.ToList();
+        }
+
+        public IEnumerable<FavoriteItem> GetFavoriteItems(Guid cartId)
+        {
+            if (cartId != Guid.Empty)
+            {
+                CartId = cartId;
+            }
+
+            var data = _repository.Get<FavoriteItem>().AsQueryable().Where(c => c.CartId == CartId)
                 .Include(s => s.Product);
             return data.ToList();
         }
