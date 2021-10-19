@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using SneakersStore.DataAccessLayer.Abstract;
 using SneakersStore.Domain.Entities;
 
@@ -17,11 +16,9 @@ namespace SneakersStore.WebAPI.Controllers
     {
         private readonly IRepository _repository;
         private readonly IWebHostEnvironment _env;
-        private readonly ILogger<CatalogController> _logger;
 
-        public CatalogController(ILogger<CatalogController> logger, IRepository repository, IWebHostEnvironment env)
+        public CatalogController(IRepository repository, IWebHostEnvironment env)
         {
-            _logger = logger;
             _repository = repository;
             _env = env;
         }

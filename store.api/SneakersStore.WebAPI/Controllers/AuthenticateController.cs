@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using SneakersStore.Domain.Entities;
 using SneakersStore.Domain.ViewModel;
 using SneakersStore.WebAPI.Services;
@@ -25,18 +17,15 @@ namespace SneakersStore.WebAPI.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly ILogger<AuthenticateController> _logger;
-        private readonly IConfiguration _configuration;
         private readonly JwtService _jwtService;
 
-        public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration, JwtService jwtService, ILogger<AuthenticateController> logger)
+        public AuthenticateController(UserManager<ApplicationUser> userManager, 
+            RoleManager<IdentityRole> roleManager,
+            JwtService jwtService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
-            _configuration = configuration;
             _jwtService = jwtService;
-            _logger = logger;
         }
 
         [HttpPost]
@@ -116,7 +105,7 @@ namespace SneakersStore.WebAPI.Controllers
                 });
             }
 
-            var userRoles = await _userManager.GetRolesAsync(user);
+            await _userManager.GetRolesAsync(user);
 
             var token = _jwtService.Generate(user.Id);
 
@@ -127,7 +116,6 @@ namespace SneakersStore.WebAPI.Controllers
                 Secure = true,
                 Expires = DateTime.Today.AddDays(3),
             });
-
             return new JsonResult(new Response
             {
                 Status = "ok", Message = "success"

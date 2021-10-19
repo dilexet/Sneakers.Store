@@ -33,7 +33,7 @@ namespace SneakersStore.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("StoreConnectionString");
-            var hostHttp = Configuration.GetSection("ClientHTTP").Value;
+            var hostHttp = Configuration.GetSection("ClientLocalHTTP").Value;
             // var hostHttps = Configuration.GetSection("ClientHTTPS").Value;
 
             // Cors

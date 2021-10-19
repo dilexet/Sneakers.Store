@@ -28,7 +28,7 @@ namespace SneakersStore.WebAPI.Controllers
         //     ViewBag.Message = "Заказ обработан";
         //     return View();
         // }
-        
+
         [HttpPost("{cartId}")]
         public JsonResult Checkout(Guid cartId, OrderForm orderForm)
         {
@@ -42,7 +42,7 @@ namespace SneakersStore.WebAPI.Controllers
 
                 // TODO: if(valid) => return RedirectToAction("Complete");
                 // TODO: else => return(orderForm)
-            
+
                 foreach (var item in items)
                 {
                     var orderDetail = new OrderDetail
@@ -53,11 +53,13 @@ namespace SneakersStore.WebAPI.Controllers
                     };
                     _repository.Add(orderDetail);
                 }
+
                 _repository.RemoveRange(items);
                 _repository.Save();
             }
             catch (Exception e)
             {
+                // ReSharper disable once TemplateIsNotCompileTimeConstantProblem
                 _logger.LogError(e.ToString());
             }
 
